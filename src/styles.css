@@ -61,40 +61,50 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+@theme inline {
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --font-sans:
+    Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --sidebar: oklch(0.984 0.003 247.858);
-  --sidebar-foreground: oklch(0.129 0.042 264.695);
-  --sidebar-primary: oklch(0.208 0.042 265.755);
-  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
-  --sidebar-accent: oklch(0.968 0.007 247.896);
-  --sidebar-accent-foreground: oklch(0.208 0.042 265.755);
-  --sidebar-border: oklch(0.929 0.013 255.508);
-  --sidebar-ring: oklch(0.704 0.04 256.788);
+  --radius: 0.75rem;
+  /* SDLT dark-first control-room palette */
+  --background: oklch(0.145 0.045 265);
+  --foreground: oklch(0.984 0.004 248);
+  --card: oklch(0.211 0.033 264);
+  --card-foreground: oklch(0.984 0.004 248);
+  --popover: oklch(0.211 0.033 264);
+  --popover-foreground: oklch(0.984 0.004 248);
+  --primary: oklch(0.573 0.216 264);
+  --primary-foreground: oklch(0.99 0.003 248);
+  --secondary: oklch(0.244 0.036 264);
+  --secondary-foreground: oklch(0.95 0.008 248);
+  --muted: oklch(0.244 0.036 264);
+  --muted-foreground: oklch(0.712 0.033 256);
+  --accent: oklch(0.72 0.13 205);
+  --accent-foreground: oklch(0.16 0.04 265);
+  --destructive: oklch(0.637 0.208 25.3);
+  --destructive-foreground: oklch(0.99 0.003 248);
+  --success: oklch(0.723 0.191 149.6);
+  --warning: oklch(0.769 0.156 70);
+  --border: oklch(0.3 0.035 264);
+  --input: oklch(0.3 0.035 264);
+  --ring: oklch(0.573 0.216 264);
+  --chart-1: oklch(0.573 0.216 264);
+  --chart-2: oklch(0.72 0.13 205);
+  --chart-3: oklch(0.723 0.191 149.6);
+  --chart-4: oklch(0.769 0.156 70);
+  --chart-5: oklch(0.637 0.208 25.3);
+  --sidebar: oklch(0.185 0.038 265);
+  --sidebar-foreground: oklch(0.95 0.008 248);
+  --sidebar-primary: oklch(0.573 0.216 264);
+  --sidebar-primary-foreground: oklch(0.99 0.003 248);
+  --sidebar-accent: oklch(0.26 0.038 264);
+  --sidebar-accent-foreground: oklch(0.95 0.008 248);
+  --sidebar-border: oklch(0.3 0.035 264);
+  --sidebar-ring: oklch(0.573 0.216 264);
 }
 
 .dark {
@@ -140,5 +150,44 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
+}
+
+@utility glow-primary {
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent),
+    0 18px 45px -20px color-mix(in oklab, var(--primary) 80%, transparent);
+}
+
+@utility surface-panel {
+  background-image: linear-gradient(
+    160deg,
+    color-mix(in oklab, var(--card) 96%, var(--primary) 4%),
+    var(--card)
+  );
+}
+
+/* Leaflet inside a dark UI */
+.leaflet-container {
+  background: var(--background);
+  font-family: var(--font-sans);
+}
+.leaflet-tile {
+  filter: brightness(0.72) contrast(1.05) saturate(0.85) hue-rotate(185deg) invert(0.94);
+}
+.leaflet-control-attribution,
+.leaflet-bar a {
+  background: var(--card) !important;
+  color: var(--muted-foreground) !important;
+  border-color: var(--border) !important;
+}
+
+@keyframes sdlt-pulse {
+  0% { transform: scale(0.9); opacity: 0.85; }
+  70% { transform: scale(1.9); opacity: 0; }
+  100% { opacity: 0; }
+}
+.sdlt-marker-pulse {
+  animation: sdlt-pulse 2s ease-out infinite;
 }
