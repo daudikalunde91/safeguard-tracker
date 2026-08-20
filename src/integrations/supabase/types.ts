@@ -14,13 +14,234 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      alerts: {
+        Row: {
+          created_at: string
+          device_id: string | null
+          id: string
+          is_read: boolean
+          message: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          device_id?: string | null
+          id?: string
+          is_read?: boolean
+          message: string
+          type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          device_id?: string | null
+          id?: string
+          is_read?: boolean
+          message?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "alerts_device_id_fkey"
+            columns: ["device_id"]
+            isOneToOne: false
+            referencedRelation: "devices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      devices: {
+        Row: {
+          battery_level: number | null
+          created_at: string
+          device_code: string
+          id: string
+          is_charging: boolean
+          last_seen: string | null
+          name: string
+          network_status: string | null
+          platform: string
+          tracking_enabled: boolean
+          user_id: string
+        }
+        Insert: {
+          battery_level?: number | null
+          created_at?: string
+          device_code: string
+          id?: string
+          is_charging?: boolean
+          last_seen?: string | null
+          name: string
+          network_status?: string | null
+          platform?: string
+          tracking_enabled?: boolean
+          user_id: string
+        }
+        Update: {
+          battery_level?: number | null
+          created_at?: string
+          device_code?: string
+          id?: string
+          is_charging?: boolean
+          last_seen?: string | null
+          name?: string
+          network_status?: string | null
+          platform?: string
+          tracking_enabled?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
+      geofences: {
+        Row: {
+          alert_enter: boolean
+          alert_exit: boolean
+          created_at: string
+          device_id: string | null
+          id: string
+          latitude: number
+          longitude: number
+          name: string
+          radius_m: number
+          user_id: string
+        }
+        Insert: {
+          alert_enter?: boolean
+          alert_exit?: boolean
+          created_at?: string
+          device_id?: string | null
+          id?: string
+          latitude: number
+          longitude: number
+          name: string
+          radius_m?: number
+          user_id: string
+        }
+        Update: {
+          alert_enter?: boolean
+          alert_exit?: boolean
+          created_at?: string
+          device_id?: string | null
+          id?: string
+          latitude?: number
+          longitude?: number
+          name?: string
+          radius_m?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "geofences_device_id_fkey"
+            columns: ["device_id"]
+            isOneToOne: false
+            referencedRelation: "devices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      locations: {
+        Row: {
+          accuracy: number | null
+          altitude: number | null
+          battery_level: number | null
+          device_id: string
+          heading: number | null
+          id: string
+          is_charging: boolean | null
+          latitude: number
+          longitude: number
+          network_status: string | null
+          recorded_at: string
+          speed: number | null
+          user_id: string
+        }
+        Insert: {
+          accuracy?: number | null
+          altitude?: number | null
+          battery_level?: number | null
+          device_id: string
+          heading?: number | null
+          id?: string
+          is_charging?: boolean | null
+          latitude: number
+          longitude: number
+          network_status?: string | null
+          recorded_at?: string
+          speed?: number | null
+          user_id: string
+        }
+        Update: {
+          accuracy?: number | null
+          altitude?: number | null
+          battery_level?: number | null
+          device_id?: string
+          heading?: number | null
+          id?: string
+          is_charging?: boolean | null
+          latitude?: number
+          longitude?: number
+          network_status?: string | null
+          recorded_at?: string
+          speed?: number | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "locations_device_id_fkey"
+            columns: ["device_id"]
+            isOneToOne: false
+            referencedRelation: "devices"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          language: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          language?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          language?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      device_exists: { Args: { p_code: string }; Returns: Json }
+      ingest_location: {
+        Args: {
+          p_accuracy?: number
+          p_altitude?: number
+          p_battery?: number
+          p_charging?: boolean
+          p_code: string
+          p_heading?: number
+          p_lat: number
+          p_lng: number
+          p_network?: string
+          p_speed?: number
+        }
+        Returns: Json
+      }
     }
     Enums: {
       [_ in never]: never
